@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="~{commons/commons::topbar}"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{commons/commons::sidebar(active='listStudent.html')}"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <tr>
+                        <th colspan="3">信息修改</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3" height="20px"></td>
+                    </tr>
+                    <tr>
+                        <td>学生Id</td>
+                        <td>
+                            <input name="id" id="stuId" type="text" th:value="${student.getId()}" readonly/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>学生姓名</td>
+                        <td>
+                            <input name="name" id="stuName" type="text" th:value="${student.getName()}" class="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>年龄</td>
+                        <td>
+                            <input type="text" id="age" name="age" th:value="${student.getAge()}" class="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>住址</td>
+                        <td>
+                            <input type="text" id="address" name="address" th:value="${student.getAddress()}" class="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" height="30px"></td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <input type="button" onclick="updateStu()" value="修改" class="button"/>
+                        </td>
+                        <td>
+                            <input type="reset" value="重置" class="button"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+<script type="text/javascript">
+    function updateStu(){
+        var stuId = $("#stuId").val();
+        var stuName = $("#stuName").val();
+        var age = $("#age").val();
+        var address = $("#address").val();
+        if(stuId == "" || stuName == "" || age == "" || address == "") {
+            alert("请将信息填写完整");
+        }else {
+            $.ajax({
+                url: "http://localhost:8080/admin/updateStudent",
+                type: "POST",
+                data: {"stuId": stuId, "stuName": stuName, "age": age, "address": address},
+                datatype: 'json',
+                success: function (data) {
+                    if (data.code == "0") {
+                        window.location.href = "http://localhost:8080/admin/listStudent";
+                    } else {
+                        alert("异常");
+                    }
+                }
+            });
+        }
+    }
+</script>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"/>
+<script type="text/javascript" th:src="@{/js/jquery-3.2.1.slim.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<!-- Icons -->
+<script type="text/javascript" th:src="@{/js/feather.min.js}"></script>
+<script>
+    feather.replace()
+</script>
+<!-- Graphs -->
+<script type="text/javascript" th:src="@{/js/Chart.min.js}"></script>
+</body>
+</html>

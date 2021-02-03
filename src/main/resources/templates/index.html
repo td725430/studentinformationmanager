@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>Signin Template for Bootstrap</title>
+		<!-- Bootstrap core CSS -->
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link th:href="@{/css/signin.css}" rel="stylesheet">
+
+		<script type="text/javascript">
+			//生成验证码的方法
+			function createCode(length) {
+				var code = "";
+				//验证码的长度
+				var codeLength = parseInt(length);
+				//验证码
+				var checkCode = document.getElementById("checkCode");
+				//所有候选组成验证码的字符，当然也可以用中文的
+				var codeChars = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+						'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+						'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+				//循环组成验证码的字符串
+				for (var i = 0; i < codeLength; i++) {
+					//获取随机验证码下标
+					var charNum = Math.floor(Math.random() * 62);
+					//组合成指定字符验证码
+					code += codeChars[charNum];
+				}
+				if (checkCode) {
+					//为验证码区域添加样式名
+					checkCode.className = "code";
+					//将生成验证码赋值到显示区
+					checkCode.innerHTML = code;
+				}
+			}
+
+			//检查验证码是否正确
+			function validateCode() {
+				//获取显示区生成的验证码
+				var checkCode = document.getElementById("checkCode").innerHTML;
+				//获取输入的验证码
+				var inputCode = document.getElementById("inputCode").value;
+				//未输入验证码
+				if (inputCode.length <= 0) {
+					document.getElementById("verification").innerHTML="<font>请输入验证码！</font>";
+				} else if (inputCode.toUpperCase() != checkCode.toUpperCase()) {
+					document.getElementById("verification").innerHTML="<font>验证码错误！</font>";
+					createCode(4);
+				} else {
+					document.getElementById("verification").innerHTML="";
+				}
+			}
+			window.onload = function () {
+				createCode(4);
+			}
+		</script>
+	</head>
+
+	<body class="text-center">
+		<form class="form-signin" th:action="@{/login}">
+			<h1 class="h3 mb-3 font-weight-normal" th:text="#{login.tip}">Please sign in</h1>
+			<!--如果msg的值不为空，则显示消息-->
+			<p style="color: red;text-align: center" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+			<label class="sr-only" th:text="#{login.name}">Username</label>
+			<input type="text" name="name" class="form-control" th:placeholder="#{login.name}" required="" autofocus="">
+			<label class="sr-only" th:text="#{login.password}">Password</label>
+			<input type="password" name="password" class="form-control" th:placeholder="#{login.password}" required="">
+			<div>
+				<div>
+					<input style="float: left" type="text" id="inputCode" onblur="validateCode()"/>
+					<div id="checkCode" class="code"  onclick="createCode(4)"></div>
+					<div style="color: red" id="verification" class="warning"></div>
+				</div>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.btn}">Sign in</button>
+			<p class="mt-5 mb-3 text-muted">© 2021-2022</p>
+		</form>
+	</body>
+</html>
