@@ -79,6 +79,12 @@ public class StudentServiceImpl implements StudentService {
     public Student getStudent(int id) {
         return studentDao.getOne(id);
     }
+
+    @Override
+    public Student findBystuId(int id) {
+        return studentDao.findBystuId(id);
+    }
+
     /**
      * 分页查询
      * @param pageable

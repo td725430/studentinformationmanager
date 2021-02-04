@@ -18,7 +18,7 @@ public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id" ,updatable = false)
-    private Integer id;
+    public Integer id;
     /**
      * 创建此学生信息的管理员Id
      */

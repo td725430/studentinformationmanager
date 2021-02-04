@@ -11,4 +11,11 @@ import org.springframework.data.jpa.repository.Query;
  * @Description:
  */
 public interface StudentDao extends JpaRepository<Student,Integer>, JpaSpecificationExecutor<Student> {
+    /**
+     * 根据学生Id查询出对应学生实体信息
+     * @param id
+     * @return
+     */
+    @Query(value = "select * from Student where id = ?1",nativeQuery = true)
+    Student findBystuId(Integer id);
 }

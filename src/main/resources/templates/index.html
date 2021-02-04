@@ -71,13 +71,15 @@
 			<input type="password" name="password" class="form-control" th:placeholder="#{login.password}" required="">
 			<div>
 				<div>
-					<input style="float: left" type="text" id="inputCode" onblur="validateCode()"/>
+					<input style="float: left" type="text" id="inputCode" onblur="validateCode()" required=""/>
 					<div id="checkCode" class="code"  onclick="createCode(4)"></div>
 					<div style="color: red" id="verification" class="warning"></div>
 				</div>
 			</div>
 			<button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.btn}">Sign in</button>
 			<p class="mt-5 mb-3 text-muted">© 2021-2022</p>
+			<a class="btn btn-sm" th:href="@{/index.html(l='zh_CN')}">中文</a>
+			<a class="btn btn-sm" th:href="@{/index.html(l='en_US')}">English</a>
 		</form>
 	</body>
 </html>

@@ -42,7 +42,6 @@
 						<table class="table table-striped table-sm">
 							<thead>
 							<tr>
-								<th type="hidden"></th>
 								<th>姓名</th>
 								<th>年龄</th>
 								<th>地址</th>
@@ -51,19 +50,19 @@
 							</thead>
 							<tbody>
 							<tr th:each="student : ${students}">
-								<td>
-									<input type="hidden" id="studentId" th:value="${student.getId()}">
-								</td>
 								<td th:text="${student.getName()}"></td>
 								<td th:text="${student.getAge()}"></td>
 								<td th:text="${student.getAddress()}"></td>
 								<td>
 									<a th:href="@{/admin/toUpdateStudent/}+${student.getId()}">修改</a>
-									<input type="button" onclick="javascript:
+									<input type="button" th:id="${student.getId()}" onclick="javascript:
+									var num = event.target.id;
+									var num1 = document.getElementById(num);
+									var stuId = num1.getAttribute('id');
 									$.ajax({
 										url:'http://localhost:8080/admin/deleteStudent',
 										type: 'GET',
-										data:{'studentId':$('#studentId').val()},
+										data:{'studentId':stuId},
 										datatype: 'json',
 										success: function (data) {
 										if(data.code == '0'){

@@ -99,7 +99,7 @@
                 url: "http://localhost:8080/admin/updateStudent",
                 type: "POST",
                 data: {"stuId": stuId, "stuName": stuName, "age": age, "address": address},
-                datatype: 'json',
+                datatype: "json",
                 success: function (data) {
                     if (data.code == "0") {
                         window.location.href = "http://localhost:8080/admin/listStudent";

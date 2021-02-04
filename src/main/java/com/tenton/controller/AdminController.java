@@ -133,7 +133,7 @@ public class AdminController {
         //获取当前时间
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         //根据学生Id查询学生信息
-        Student student = studentService.getStudent(stuId);
+        Student student = studentService.findBystuId(stuId);
         //修改学生相关信息
         //修改人Id
         student.setUpdateId(adminId);
@@ -146,9 +146,10 @@ public class AdminController {
         //修改时间
         student.setUpdateTime(timestamp);
         studentService.updateStudent(student);
+        String id = String.valueOf(stuId);
         //将学生数据存储到redis中，redis如果存在此key的数据，直接覆盖
         redisTemplate.opsForValue().set(student.getId().toString(),student);
-        Map<String,String> map = new HashMap();
+        Map<String,String> map = new HashMap<String,String>();
         //返回给前端Ajax一个成功的数据
         map.put("code","0");
         return map;
@@ -222,7 +223,7 @@ public class AdminController {
         return "/uploadExcel";
     }
     /**
-     * 批量添加图书
+     * 批量添加学生信息
      * @param file
      */
     @RequestMapping("/upload")
@@ -239,6 +240,7 @@ public class AdminController {
                     String name = strings[0];
                     Integer age = Integer.parseInt(strings[1]);
                     String address = strings[2];
+                    //当前时间
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                     //获取文件中对应的值，并赋值给一个新学生对象
                     Student student = new Student(adminId,name,age,address,timestamp,timestamp);

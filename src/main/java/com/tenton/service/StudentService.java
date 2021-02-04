@@ -53,6 +53,13 @@ public interface StudentService {
     Student getStudent(int id);
 
     /**
+     * 查询真实对象，而不是动态代理对象
+     * @param id
+     * @return
+     */
+    Student findBystuId(int id);
+
+    /**
      * 分页查询
      * @param pageable
      * @return

@@ -19,9 +19,6 @@ spring:
   #关闭模板引擎的缓存
   thymeleaf:
     cache: false
-  mvc:
-    format:
-      date: yyyy-MM-dd
   redis:
     #地址
     host: 59.110.65.106
