@@ -13,12 +13,15 @@ spring:
     show-sql: true
     #设置Hibernate SQL方言
     database-platform: org.hibernate.dialect.MySQLDialect
-  #配置文件的真实位置
+    #配置文件的真实位置
   messages:
     basename: i18n.login
   #关闭模板引擎的缓存
   thymeleaf:
     cache: false
+  mvc:
+    format:
+      date: yyyy-MM-dd
   redis:
     #地址
     host: 59.110.65.106
